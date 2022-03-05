@@ -29,7 +29,7 @@ public class CategoryController {
                 .data(category).build();
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/{id}")
     public BaseResponse updateCategory(@PathVariable long id, @RequestBody @Valid CategoryRequest request) {
         var category = service.updateCategory(id, request);
         return BaseResponse.builder()

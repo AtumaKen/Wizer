@@ -2,9 +2,9 @@ package com.wizer.wizer_test.io.entities;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class Category {
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     private String categoryName;
 }

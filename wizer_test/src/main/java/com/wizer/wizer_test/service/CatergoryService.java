@@ -1,6 +1,7 @@
 package com.wizer.wizer_test.service;
 
 import com.wizer.wizer_test.exceptions.NotFoundException;
+import com.wizer.wizer_test.helper.Validations;
 import com.wizer.wizer_test.io.entities.Category;
 import com.wizer.wizer_test.io.repositories.CategoryRepository;
 import com.wizer.wizer_test.models.request.CategoryRequest;
@@ -22,17 +23,23 @@ public class CatergoryService {
     @Autowired
     private ModelMapper mapper;
 
-    public Category saveCategory(CategoryRequest categoryRequest){
+    @Autowired
+    private Validations validations;
+
+    public Category saveCategory(CategoryRequest categoryRequest) {
+        validations.validateCategory(categoryRequest);
         var category = mapper.map(categoryRequest, Category.class);
         return categoryRepository.save(category);
     }
 
-    public Category updateCategory(long id, CategoryRequest request){
+    public Category updateCategory(long id, CategoryRequest request) {
+        validations.validateCategory(request);
+
         var category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("404", "Category Not found"));
 
-          mapper.map(request, category);
-        log.info("Updating category {}", category);
+        mapper.map(request, category);
+        //todo: validate here too
         return categoryRepository.save(category);
     }
 
